@@ -47,7 +47,7 @@ export default {
     background: $dark-blue;
     min-height: 100vh;
     height: 100%;
-    width: $nav-width;
+    min-width: $nav-width;
   }
   a {
     &:hover {

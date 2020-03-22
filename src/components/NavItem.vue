@@ -34,6 +34,5 @@ export default {
     &__title {
       color: $white;
     }
-
   }
 </style>
