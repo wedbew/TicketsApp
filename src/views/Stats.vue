@@ -1,30 +1,19 @@
 <template>
   <div class="container stats">
-    <Users className="form__field" label="assign" />
     <div v-if="this.$store.state.activePerson !== null">
-      <h1>Number of tasks assigned to {{this.$store.state.activePerson}}:
-        {{ this.$store.getters.numberOfTickesPerUser(this.$store.state.activePerson) }}
-      </h1>
     </div>
-    <Table
-      v-if="this.$store.getters.numberOfTickesPerUser(this.$store.state.activePerson) > 0"
-      :tickets="this.$store.getters.searchByUser(this.$store.state.activePerson)" />
-    <h1>Number of tickets {{ this.$store.getters.numberOfTickets }}</h1>
+    <h2>Number of tickets {{ this.$store.getters.numberOfTickets }}</h2>
     <PieChart v-if="stats.length > 0" :data="chartData" :options="chartOptions" />
   </div>
 </template>
 
 <script>
-import Users from '../components/Form/Users.vue';
-import Table from '../components/Table.vue';
 import PieChart from '../components/PieChart.vue';
 
 export default {
   name: 'Stats',
   components: {
-    Users,
     PieChart,
-    Table,
   },
   data() {
     return {
@@ -39,7 +28,7 @@ export default {
         datasets: [
           {
             label: 'Users',
-            backgroundColor: ['#41B883', '#E46651', '#00D8FF'],
+            backgroundColor: ['#feca57', '#070606', '#1dd1a1', 'ff6b6b', '54a0ff', '00d2d3', '222f3e', '8395a7'],
             data: [],
           },
         ],
@@ -79,8 +68,14 @@ export default {
 
 <style lang="scss">
   @import '../assets/styles/variables.scss';
+  @import '../assets/styles/globals.scss';
   .stats {
+    @include rwd('tablet') {
+      margin-top: 50px;
+    }
     display: flex;
     flex-direction: column;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 </style>

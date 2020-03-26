@@ -1,5 +1,8 @@
 <template>
-  <button @click="toJSON">Export tasks</button>
+  <div class="export" @click="toJSON">
+    <span class="export__icon icon-export"></span>
+    <button class="export__btn">Export tasks</button>
+  </div>
 </template>
 
 <script>
@@ -32,4 +35,17 @@ export default {
 
 <style lang="scss">
   @import '../assets/styles/variables.scss';
+    @import './../assets/icomoon/style.css';
+  .export {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    &__icon {
+      margin-right: $gap;
+      color: $white;
+    }
+    &__btn {
+      color: $white;
+    }
+  }
 </style>

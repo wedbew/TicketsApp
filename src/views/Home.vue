@@ -4,10 +4,10 @@
       <NavTop select />
       <Header title="Tickets" />
       <div class="home__table">
-        <Table :tickets="this.$store.getters.searchByUser(this.$store.state.activePerson)" />
+        <Table
+          :data="this.$store.getters.searchByUser(this.$store.state.activePerson)"
+        />
       </div>
-      <ExportTasks />
-      <ImportTasks />
     </div>
   </div>
 </template>
@@ -17,8 +17,6 @@
 import NavTop from '../components/NavTop.vue';
 import Table from '../components/Table.vue';
 import Header from '../components/Header.vue';
-import ExportTasks from '../components/ExportTasks.vue';
-import ImportTasks from '../components/ImportTasks.vue';
 
 export default {
   name: 'Home',
@@ -26,8 +24,6 @@ export default {
     NavTop,
     Table,
     Header,
-    ExportTasks,
-    ImportTasks,
   },
 };
 </script>
@@ -54,7 +50,8 @@ export default {
       @include rwd('large-laptop') {
         width: 100%;
       }
-      margin-top: $gap;
+      overflow-x: hidden;
+      padding: $gap;
       width: 100%;
       // width: 1260px;
     }

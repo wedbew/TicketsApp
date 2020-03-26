@@ -22,5 +22,11 @@ export default {
     width: 100%;
     background-color: $white;
     border-bottom: 1px solid $grey;
+    &__title {
+      margin-left: 20px;
+      padding: 20px 0;
+      font-weight: 700;
+      font-size: 2em;
+    }
   }
 </style>

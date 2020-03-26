@@ -44,6 +44,18 @@
       <div class="form__field">
         <label
           class="form__title"
+          for="description">Notes</label>
+        <textarea
+          v-model="notes"
+          type="text"
+          name="description"
+          class="form__input">
+        </textarea>
+        <input class="form__input--file" type="file" @change="processFile($event)">
+      </div>
+      <div class="form__field">
+        <label
+          class="form__title"
           for="severity"
           :class="{ 'form__title--error': $v.selectedSeverity.$error }">Severity</label>
         <vSelect
@@ -90,9 +102,6 @@
         </div>
       </div>
       <div class="form__field">
-        <Users />
-      </div>
-      <div class="form__field">
         <button type="submit">Submit</button>
       </div>
       <div class="form__filed">
@@ -107,17 +116,19 @@
 import vSelect from 'vue-select';
 import { validationMixin } from 'vuelidate';
 import { required, minLength } from 'vuelidate/lib/validators';
-import Users from './Form/Users.vue';
 
 export default {
   name: 'Form',
   components: {
     vSelect,
-    Users,
+  },
+  props: {
+    edit: Boolean,
   },
   mixins: [validationMixin],
   data() {
     return {
+      activeTicket: null,
       title: null,
       description: null,
       option: null,
@@ -137,6 +148,8 @@ export default {
         'closed',
         'attachments',
       ],
+      notes: null,
+      file: null,
       selectedStatus: null,
       ticket: null,
     };
@@ -166,8 +179,23 @@ export default {
         this.setPeople();
       },
     );
+    if (this.$props.edit) {
+      const index = this.$store.getters.getTicketIndex;
+      const ticket = this.$store.getters.activeTicket(index);
+      this.title = ticket.title;
+      this.description = ticket.description;
+      this.selectedSeverity = ticket.severity;
+      this.selectedStatus = ticket.status;
+      this.selectedPerson = ticket.user;
+      this.notes = ticket.notes;
+      this.file = ticket.file;
+    }
   },
   methods: {
+    processFile(e) {
+      // eslint-disable-next-line prefer-destructuring
+      this.file = e.target.files[0];
+    },
     setPeople() {
       this.people = this.$store.state.users;
     },
@@ -184,8 +212,16 @@ export default {
           severity: this.selectedSeverity,
           status: this.selectedStatus,
           user: this.selectedPerson,
+          notes: this.notes,
+          file: this.file,
         };
-        this.$store.commit('ADD_TICKET', this.ticket);
+        if (this.$props.edit) {
+          this.activeTicket = this.$store.state.activeTicket;
+          this.ticket.id = this.activeTicket;
+          this.updateTicket(this.ticket);
+        } else {
+          this.$store.commit('ADD_TICKET', this.ticket);
+        }
         setTimeout(() => {
           this.resetForm();
           setTimeout(() => {
@@ -202,6 +238,11 @@ export default {
       this.selectedPerson = null;
       this.submitStatus = 'OK';
       this.$v.$reset();
+    },
+    updateTicket(ticket) {
+      this.$store.commit('UPDATE_TICKET', ticket);
+      // I had to add this mutation because computed doesn't respond if I update data in vuex
+      this.$store.commit('ADD_AND_REMOVE', ticket);
     },
   },
 };
@@ -233,7 +274,7 @@ export default {
     }
     &__select {
       position: relative;
-      * {
+      div {
         border-radius: unset;
       }
     }

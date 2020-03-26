@@ -9,12 +9,17 @@ export default new Vuex.Store({
     users: null,
     tickets: [],
     activePerson: 'All users',
+    activeTicket: null,
     sortBy: 'index',
     sortDir: 'asc',
+    openModal: false,
   },
   mutations: {
     SET_ACTIVE_PERSON(state, person) {
       state.activePerson = person;
+    },
+    SET_ACTIVE_TICKET(state, ticketID) {
+      state.activeTicket = ticketID;
     },
     SET_USERS(state, users) {
       state.users = users;
@@ -23,7 +28,16 @@ export default new Vuex.Store({
       state.tickets.push(ticket);
     },
     REMOVE_TICKET(state, ticketID) {
-      state.tickets.filter((ticket) => ticket.id !== ticketID);
+      state.tickets = state.tickets.filter((ticket) => ticket.id !== ticketID);
+    },
+    UPDATE_TICKET(state, ticket) {
+      const index = state.tickets.findIndex((item) => item.id === ticket.id);
+      state.tickets[index] = ticket;
+    },
+    // I had to add this mutation because computed doesn't respond if I update data in vuex
+    ADD_AND_REMOVE(state, ticket) {
+      state.tickets.push(ticket);
+      state.tickets.pop(ticket);
     },
     CHANGE_SORTING(state, sortBy) {
       state.sortBy = sortBy;
@@ -31,9 +45,9 @@ export default new Vuex.Store({
     CHANGE_SORT_DIR(state, sortDir) {
       state.sortDir = sortDir;
     },
-    // UPDATE_TICKET(state, ticket) {
-    //   state.tickets =
-    // },
+    UPDATE_MODAL(state, modal) {
+      state.openModal = modal;
+    },
   },
   actions: {
     getUsers({ commit }) {
@@ -68,16 +82,6 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    sortedTickets(state) {
-      return state.ticketsByAcitveUser
-        .sort((a, b) => {
-          let modifier = 1;
-          if (state.sortDir === 'dsc') modifier = -1;
-          if (a[state.sortBy] < b[state.sortBy]) return -1 * modifier;
-          if (a[state.sortBy] > b[state.sortBy]) return 1 * modifier;
-          return 0;
-        });
-    },
     numberOfTickets: (state) => state.tickets.length,
     searchByUser(state) {
       return (keyword) => state.tickets.filter((item) => {
@@ -90,6 +94,13 @@ export default new Vuex.Store({
     numberOfTickesPerUser(state) {
       return (keyword) => state.tickets
         .filter((item) => item.user === keyword).length;
+    },
+    getTicketIndex(state) {
+      const checkID = (item) => item.id === state.activeTicket;
+      return state.tickets.findIndex(checkID);
+    },
+    activeTicket(state) {
+      return (index) => state.tickets[index];
     },
   },
 });

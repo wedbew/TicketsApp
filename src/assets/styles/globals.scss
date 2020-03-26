@@ -16,7 +16,7 @@ body {
 
 .container {
   @include rwd('laptop') {
-    padding: 0 15px;
+    // padding: 0 15px;
     width: 100%;
   }
 

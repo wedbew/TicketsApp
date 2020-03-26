@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       people: [],
-      allUsers: this.value ? this.value : null,
+      allUsers: this.$props.value,
     };
   },
   components: {

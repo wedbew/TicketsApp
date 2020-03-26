@@ -28,9 +28,6 @@ export default {
     return {
       items: [
         {
-          img: 'icon-notification',
-        },
-        {
           img: 'icon-grid',
         },
       ],
@@ -41,8 +38,12 @@ export default {
 
 <style lang="scss">
   @import '../assets/styles/variables.scss';
+  @import '../assets/styles/globals.scss';
 
   .navTop {
+    @include rwd('large-phone') {
+      padding-top: 60px;
+    }
     width: 100%;
     min-height: 101px;
     margin: 0 15px;
