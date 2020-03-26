@@ -11,13 +11,13 @@
  * See https://goo.gl/2aRDsh
  */
 
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  '/precache-manifest.55416bc78a5b8aa45fb715192bdc048f.js',
+  "/precache-manifest.d5fd7b0c98b3e489e154f76701be038b.js"
 );
 
-workbox.core.setCacheNameDetails({ prefix: 'ticketapp' });
+workbox.core.setCacheNameDetails({prefix: "ticketapp"});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {

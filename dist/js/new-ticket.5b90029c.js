@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["new-ticket"],{"5a5d":function(n,t,e){"use strict";var a=e("f27f"),c=e.n(a);c.a},acb3:function(n,t,e){"use strict";e.r(t);var a=function(){var n=this,t=n.$createElement,e=n._self._c||t;return e("div",{staticClass:"container"},[e("div",{staticClass:"newTicket"},[e("Form")],1)])},c=[],i=e("8477"),s={name:"NewTicket",components:{Form:i["a"]}},o=s,r=(e("5a5d"),e("2877")),u=Object(r["a"])(o,a,c,!1,null,null,null);t["default"]=u.exports},f27f:function(n,t,e){}}]);
+//# sourceMappingURL=new-ticket.5b90029c.js.map

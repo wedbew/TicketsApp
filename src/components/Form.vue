@@ -236,6 +236,7 @@ export default {
       this.selectedSeverity = null;
       this.selectedStatus = null;
       this.selectedPerson = null;
+      this.notes = null;
       this.submitStatus = 'OK';
       this.$v.$reset();
     },
